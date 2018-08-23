@@ -1,17 +1,11 @@
 'use strict'
 
-import {
-	GraphQLList,
-	GraphQLString,
-	GraphQLNonNull
-} from 'graphql'
-
+import { GraphQLList, GraphQLString } from 'graphql'
 import PostType from '../types/Post'
 import PostResolver from '../resolvers/Post'
  
 
-module.exports = {
- 
+export default {
 	index() {
 		return {
 			type: new GraphQLList(PostType),
@@ -23,9 +17,10 @@ module.exports = {
 				}
 			},
 			resolve(parent, args, context, info) {
-				return PostResolver.index(args);
+        const postResolver = PostResolver.index(args)
+        console.log(`postResolver: ${postResolver}`)
+				return postResolver
 			}
 		}
-	},
- 
+	}
 }

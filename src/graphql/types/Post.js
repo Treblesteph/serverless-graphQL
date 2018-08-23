@@ -43,10 +43,7 @@ const PostType = new GraphQLObjectType({
 			type: GraphQLString,
 			description: 'Markdown content of the post',
 		}
-
 	})
-
 })
 
-
-module.exports = PostType
+export default PostType
