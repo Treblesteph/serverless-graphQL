@@ -2,27 +2,23 @@
 
 import axios from 'axios'
 
-const PostsController = {
- 
-	index: ( args ) => {
- 
+const PostsController = { 
+	index: async args => {
 		const URL = `https://www.reddit.com/r/${ args.subreddit || 'javascript' }.json`
- 
-		return axios.get( URL )
-			.then( (response) => {
-				const __posts = []
-				const posts = response.data.data.children
- 
-				posts.map( post => {
-					post.data.content = post.data.selftext_html
-					__posts.push( post.data )
-				})
-				return __posts
-			})
-			.catch( (error) => {
-				return { error: error }
-			})
-	}
+    try {
+      const response = await axios.get(URL)
+      const __posts = []
+      const posts = response.data.data.children
+      posts.map(post => {
+        post.data.content = post.data.selftext_html
+        __posts.push(post.data)
+      })
+      return __posts
+    }
+    catch (err) {
+      console.warn(`Error calling reddit api: ${err}`)
+    }
+  }
 }
- 
-module.exports = PostsController;
+
+export default PostsController
